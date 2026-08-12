@@ -63,7 +63,6 @@ func HashWithSalt(runes []rune, salt string) string {
 	mid := len(runes) / 2
 	saltRunes := []rune(salt)
 	combined := make([]rune, 0, len(runes)+len(saltRunes))
-	fmt.Println(len(combined), len(runes), len(saltRunes))
 	combined = append(combined, runes[:mid]...)
 	combined = append(combined, saltRunes...)
 	combined = append(combined, runes[mid:]...)
