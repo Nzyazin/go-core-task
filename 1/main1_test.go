@@ -74,7 +74,6 @@ func TestHashWithSalt(t *testing.T) {
 	if hash == "" {
 		t.Error("HashWithSalt returned empty string")
 	}
-	// SHA256 hex digest is always 64 chars
 	if len(hash) != 64 {
 		t.Errorf("len(hash) = %d, want 64", len(hash))
 	}
