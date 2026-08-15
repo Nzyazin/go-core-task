@@ -31,10 +31,8 @@ func TestCopySlice(t *testing.T) {
 	original := []int{1, 2, 3}
 	copySlice := copySlice(original)
 
-	// Меняем оригинал.
 	original[0] = 999
 
-	// Копия не должна измениться.
 	expected := []int{1, 2, 3}
 
 	if !reflect.DeepEqual(copySlice, expected) {

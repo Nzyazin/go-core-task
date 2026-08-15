@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
 )
 
 func sliceExample(oldSlice []int) []int {
@@ -35,7 +33,6 @@ func removeElement(numbers []int, index int) []int {
 	}
 
 	newSlice := make([]int, 0, len(numbers)-1)
-	fmt.Println(newSlice)
 	newSlice = append(newSlice, numbers[:index]...)
 	newSlice = append(newSlice, numbers[index+1:]...)
 
@@ -43,12 +40,7 @@ func removeElement(numbers []int, index int) []int {
 }
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
-	originalSlice := make([]int, 10)
-
-	for i := range originalSlice {
-		originalSlice[i] = rand.Intn(100)
-	}
+	originalSlice := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 
 	fmt.Println("Original:", originalSlice)
 
