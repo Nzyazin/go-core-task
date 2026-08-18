@@ -31,3 +31,41 @@ func TestWaitGroup(t *testing.T) {
 		t.Fatalf("result = %d, want 3", result)
 	}
 }
+
+func TestWaitGroupReuse(t *testing.T) {
+	wg := NewWaitGroup()
+
+	wg.Add(1)
+	wg.Done()
+	wg.Wait()
+
+	wg.Add(1)
+	done := make(chan struct{})
+	go func() {
+		defer wg.Done()
+		close(done)
+	}()
+	wg.Wait()
+
+	select {
+	case <-done:
+	default:
+		t.Fatal("Wait вернулся до завершения горутины")
+	}
+}
+
+func TestWaitGroupNoAdd(t *testing.T) {
+	wg := NewWaitGroup()
+
+	done := make(chan struct{})
+	go func() {
+		wg.Wait()
+		close(done)
+	}()
+
+	select {
+	case <-done:
+	case <-time.After(time.Second):
+		t.Fatal("Wait не вернулся при count == 0")
+	}
+}

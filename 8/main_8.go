@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"time"
+)
+
 type WaitGroup struct {
 	sem   chan struct{}
 	count int
@@ -54,6 +59,18 @@ func (wg *WaitGroup) Wait() {
 
 func main() {
 	wg := NewWaitGroup()
-	wg.Add(1)
-	wg.Done()
+	results := make([]int, 3)
+
+	wg.Add(3)
+	for i := 0; i < 3; i++ {
+		go func(id int) {
+			defer wg.Done()
+			time.Sleep(time.Duration(100-id*20) * time.Millisecond)
+			results[id] = id * id
+			fmt.Printf("горутина %d завершилась, результат=%d\n", id, results[id])
+		}(i)
+	}
+
+	wg.Wait()
+	fmt.Println("все горутины завершены:", results)
 }
